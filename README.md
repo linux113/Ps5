@@ -1,6 +1,10 @@
 # 🌴 LEONIDA LIVE — GTA VI × Flagsmith Flag Command Center
 
+![Vice City sunset](assets/hero.png)
+
 **Flip a flag. Change Vice City. Instantly. No patch. No restart.**
+
+> 🎬 **Demo video:** see [docs/VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md) for the 2-minute script + narration audio (`assets/narration.mp3`).
 
 A PS5-style live-ops dashboard for a fictional GTA VI Online, powered by
 open-source [Flagsmith](https://www.flagsmith.com/). Every toggle is a real
@@ -22,6 +26,20 @@ player count) updates live, across environments, with zero redeploy.
 | **One-command setup** | `docker compose up` or two stdlib Python commands. Zero `pip`/`npm` installs. |
 | **Reusable by others** | Add a flag in 3 steps (see `docs/ARCHITECTURE.md`). MIT licensed. |
 | **Never breaks live** | Mock API → local fallback. Works offline, in a preview iframe, anywhere. |
+
+---
+
+## 📸 Screenshots
+
+| Before — expansion locked | After — flags flipped live |
+|---|---|
+| ![Dashboard concept](assets/dashboard.png) | ![Leonida map unlocked](assets/map-unlocked.png) |
+
+> **Take real screenshots in 2 minutes:** run the app (`python3 -m http.server 3000`),
+> open `http://localhost:3000`, screenshot (1) locked map, (2) after flipping
+> `leonida_expansion` + `neon_nights_event`, (3) terminal running
+> `python3 cli/leonida.py --list`. Save as `assets/shot-1.png` etc. and replace
+> the images above — judges trust real captures over concept art.
 
 ---
 
