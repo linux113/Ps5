@@ -1,0 +1,61 @@
+# LEONIDA LIVE — one-command demo stack
+#
+#   docker compose up            -> app (:3000) + mock Flagsmith API (:8001)  [instant, no signup]
+#   docker compose --profile real up -> + REAL self-hosted Flagsmith (:8000) [Django + Postgres]
+#
+# Then open http://localhost:3000 and flip flags. The terminal dashboard
+# (python3 cli/leonida.py) and the web dashboard share the same mock state.
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mock
+
+  mock:
+    image: python:3.12-alpine
+    working_dir: /srv
+    volumes:
+      - ./mock:/srv/mock
+      - ./seed-flags.json:/srv/seed-flags.json
+    command: python /srv/mock/server.py --port 8001
+    ports:
+      - "8001:8001"
+
+  # ---- REAL Flagsmith (official image + Postgres) — opt-in profile ----
+  postgres:
+    image: postgres:15.5-alpine
+    profiles: ["real"]
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flagsmith
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d flagsmith -U postgres"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+      start_period: 20s
+
+  flagsmith:
+    image: docker.flagsmith.com/flagsmith/flagsmith:latest
+    profiles: ["real"]
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/flagsmith
+      USE_POSTGRES_FOR_ANALYTICS: "true"
+      ENVIRONMENT: production
+      DJANGO_ALLOWED_HOSTS: "*"
+      FLAGSMITH_DOMAIN: localhost:8000
+      DJANGO_SECRET_KEY: secret
+      PROMETHEUS_ENABLED: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:

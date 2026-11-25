@@ -1,0 +1,117 @@
+{
+  "project": "LEONIDA LIVE — GTA VI Live-Ops",
+  "version": "1.0.0",
+  "environments": ["production", "staging", "dev"],
+  "flags": [
+    {
+      "name": "leonida_expansion",
+      "label": "Leonida Expansion",
+      "icon": "🗺️",
+      "description": "Unlock the Leonida Keys & Port Gellhorn. New islands, new heists, zero app update.",
+      "category": "World",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": true },
+      "rollout": 100,
+      "affects": "Map: Keys + Port Gellhorn appear"
+    },
+    {
+      "name": "neon_nights_event",
+      "label": "Neon Nights Event",
+      "icon": "🌃",
+      "description": "Vice City Neon Nights weekend. Clubs open, skyline lit, double cash on races.",
+      "category": "Event",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": false },
+      "rollout": 100,
+      "affects": "Map: night mode + neon glow"
+    },
+    {
+      "name": "hurricane_ian",
+      "label": "Hurricane Ian",
+      "icon": "🌪️",
+      "description": "Dynamic hurricane weather rolls into Leonida. Rain, wind, flooded streets.",
+      "category": "World",
+      "default": false,
+      "values": { "production": false, "staging": false, "dev": true },
+      "rollout": 100,
+      "affects": "Map: rain + storm overlay"
+    },
+    {
+      "name": "double_xp_weekend",
+      "label": "Double XP Weekend",
+      "icon": "⭐",
+      "description": "2× XP and cash across all Online modes. The classic live-ops lever.",
+      "category": "Economy",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": true },
+      "rollout": 100,
+      "affects": "Stats: XP multiplier ×2"
+    },
+    {
+      "name": "ps5_beta_access",
+      "label": "PS5 Beta Access",
+      "icon": "🎮",
+      "description": "PS5-exclusive beta: 4K/120Hz, DualSense haptics, 3D audio. Invite-only rollout.",
+      "category": "Platform",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": true },
+      "rollout": 25,
+      "affects": "Badge: 4K/120Hz + player count"
+    },
+    {
+      "name": "police_pursuit_ai",
+      "label": "Police Pursuit AI",
+      "icon": "🚔",
+      "description": "Smarter cops. Helicopters, roadblocks and a 5-star wanted system that actually hunts.",
+      "category": "Gameplay",
+      "default": false,
+      "values": { "production": false, "staging": false, "dev": true },
+      "rollout": 100,
+      "affects": "Map: police cars + wanted stars"
+    },
+    {
+      "name": "lowrider_culture_pack",
+      "label": "Lowrider Culture Pack",
+      "icon": "🚗",
+      "description": "Lowrider car meet at Ocean Drive. Hydraulics, neon underglow, new paint jobs.",
+      "category": "Content",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": false },
+      "rollout": 100,
+      "affects": "Map: car meet marker"
+    },
+    {
+      "name": "crossplay_enabled",
+      "label": "Crossplay",
+      "icon": "🔗",
+      "description": "PS5 ↔ Xbox ↔ PC crossplay. One lobby, every platform, instant matchmaking.",
+      "category": "Platform",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": true },
+      "rollout": 50,
+      "affects": "Stats: players online ×3"
+    },
+    {
+      "name": "new_weapon_smg",
+      "label": "Silenced SMG Drop",
+      "icon": "🔫",
+      "description": "New weapon drop: suppressed SMG with custom attachments. No patch needed.",
+      "category": "Content",
+      "default": false,
+      "values": { "production": false, "staging": false, "dev": true },
+      "rollout": 100,
+      "affects": "Loadout: weapon appears"
+    },
+    {
+      "name": "traffic_density_high",
+      "label": "Rush Hour Traffic",
+      "icon": "🚦",
+      "description": "High-density traffic AI. Vice City feels alive — and impossible to drive through.",
+      "category": "Gameplay",
+      "default": false,
+      "values": { "production": false, "staging": true, "dev": true },
+      "rollout": 100,
+      "affects": "Map: traffic speed + density"
+    }
+  ]
+}

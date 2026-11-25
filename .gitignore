@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+mock/state.json
+.DS_Store
+.env
+node_modules/
+dist/
+build/
+assets/frames/

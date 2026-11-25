@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEONIDA LIVE — GTA VI × Flagsmith Flag Command Center</title>
+<meta name="description" content="Flip a Flagsmith flag. Change Vice City. Instantly. No patch. No restart.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">🌴</div>
+    <div>
+      <h1>LEONIDA <span>LIVE</span></h1>
+      <p>GTA VI Live-Ops × Flagsmith</p>
+    </div>
+    <span class="ps5-badge">PS5</span>
+  </div>
+
+  <nav class="env-tabs" role="tablist" aria-label="Environment">
+    <button class="env-tab active" data-env="production" role="tab">Production</button>
+    <button class="env-tab" data-env="staging" role="tab">Staging</button>
+    <button class="env-tab" data-env="dev" role="tab">Dev</button>
+  </nav>
+
+  <div class="top-actions">
+    <span id="connPill" class="conn-pill mock" title="Connection status">● MOCK MODE</span>
+    <button id="connectBtn" class="btn ghost">⚙ Connect Flagsmith</button>
+    <div class="player">
+      <div class="avatar">L</div>
+      <div class="player-meta">
+        <strong>Lucia_06</strong>
+        <small>Level 47 · Vice City</small>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- ============ MAP PANEL ============ -->
+  <section class="map-panel card">
+    <div class="panel-head">
+      <div>
+        <h2>🗺️ Vice City — Live World</h2>
+        <p id="worldStatus">Every pixel below is driven by a Flagsmith flag. Flip one → watch the city change.</p>
+      </div>
+      <div class="shapes" aria-hidden="true"><span>△</span><span>○</span><span>✕</span><span>□</span></div>
+    </div>
+
+    <div class="map-wrap" id="mapWrap">
+      <svg id="viceMap" viewBox="0 0 800 560" role="img" aria-label="Vice City live map">
+        <defs>
+          <linearGradient id="ocean" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0b2a4a"/><stop offset="1" stop-color="#06203a"/>
+          </linearGradient>
+          <linearGradient id="sunset" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff2e88"/><stop offset=".5" stop-color="#ff8c42"/><stop offset="1" stop-color="#ffd166"/>
+          </linearGradient>
+          <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1b2b3a"/><stop offset="1" stop-color="#12202e"/>
+          </linearGradient>
+          <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#00e5ff" stop-opacity=".55"/><stop offset="1" stop-color="#00e5ff" stop-opacity="0"/>
+          </radialGradient>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".05"/>
+          </pattern>
+        </defs>
+
+        <rect width="800" height="560" fill="url(#ocean)"/>
+        <rect width="800" height="560" fill="url(#grid)"/>
+
+        <!-- Leonida Keys (flag: leonida_expansion) -->
+        <g id="keysGroup" class="locked">
+          <g class="island"><ellipse cx="180" cy="470" rx="70" ry="26"/><ellipse cx="300" cy="495" rx="55" ry="20"/><ellipse cx="420" cy="480" rx="60" ry="22"/><ellipse cx="540" cy="500" rx="48" ry="18"/></g>
+          <text x="360" y="452" class="map-label">LEONIDA KEYS</text>
+          <text x="360" y="468" class="map-sub">🔒 Locked — flip leonida_expansion</text>
+        </g>
+
+        <!-- Port Gellhorn (flag: leonida_expansion) -->
+        <g id="gellhornGroup" class="locked">
+          <path class="land-shape" d="M40 300 L150 280 L170 360 L60 380 Z"/>
+          <text x="105" y="335" class="map-label">PORT GELLHORN</text>
+        </g>
+
+        <!-- Mainland Vice City -->
+        <path class="land-shape" d="M220 60 L560 40 L600 220 L580 380 L300 400 L230 260 Z"/>
+        <!-- Vice Beach island -->
+        <path class="land-shape beach" d="M640 90 L740 110 L730 300 L650 320 L630 180 Z"/>
+        <!-- Ambrosia north -->
+        <path class="land-shape" d="M300 20 L520 10 L540 45 L320 55 Z"/>
+
+        <!-- bridges -->
+        <g class="bridge"><rect x="580" y="150" width="60" height="10" rx="4"/><rect x="580" y="250" width="60" height="10" rx="4"/></g>
+
+        <!-- roads -->
+        <g class="roads">
+          <path d="M260 80 L560 70 M260 160 L570 150 M270 240 L575 230 M280 320 L560 310"/>
+          <path d="M320 60 L340 390 M420 55 L430 385 M510 50 L520 380"/>
+          <path d="M660 120 L680 300 M700 115 L715 295"/>
+        </g>
+
+        <!-- traffic dots (JS animated) -->
+        <g id="trafficLayer"></g>
+
+        <!-- police (flag: police_pursuit_ai) -->
+        <g id="policeLayer" class="hidden-layer">
+          <circle cx="400" cy="200" r="26" fill="url(#glow)"/>
+          <text x="400" y="160" text-anchor="middle" class="map-label pink">🚔 5-STAR PURSUIT</text>
+          <text x="400" y="240" text-anchor="middle" font-size="22">🚔</text>
+          <text x="350" y="230" text-anchor="middle" font-size="18">🚓</text>
+          <text x="455" y="235" text-anchor="middle" font-size="18">🚁</text>
+        </g>
+
+        <!-- lowrider meet (flag: lowrider_culture_pack) -->
+        <g id="lowriderLayer" class="hidden-layer">
+          <circle cx="680" cy="210" r="30" fill="url(#glow)"/>
+          <text x="680" y="170" text-anchor="middle" class="map-label cyan">LOWRIDER MEET</text>
+          <text x="680" y="218" text-anchor="middle" font-size="24">🚗</text>
+        </g>
+
+        <!-- labels -->
+        <text x="410" y="120" class="map-label big">VICE CITY</text>
+        <text x="410" y="140" class="map-sub">Downtown · Ocean Drive</text>
+        <text x="685" y="200" class="map-label">VICE BEACH</text>
+        <text x="420" y="38" class="map-label">AMBROSIA</text>
+        <text x="410" y="430" class="map-sub">Leonida Keys — expansion zone</text>
+
+        <!-- night overlay (flag: neon_nights_event) -->
+        <rect id="nightOverlay" width="800" height="560" fill="#0a0620" opacity="0"/>
+        <!-- hurricane overlay (flag: hurricane_ian) -->
+        <g id="rainLayer" opacity="0"></g>
+
+        <!-- sunset sun -->
+        <circle id="sun" cx="700" cy="80" r="34" fill="url(#sunset)" opacity=".9"/>
+      </svg>
+
+      <div id="eventBanner" class="event-banner hidden">🌃 NEON NIGHTS WEEKEND IS LIVE</div>
+      <div id="stormBanner" class="storm-banner hidden">🌪️ HURRICANE IAN — STAY INDOORS</div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat"><span class="stat-label">Players Online</span><strong id="statPlayers">12,400</strong><small id="statPlayersSub">PS5 only</small></div>
+      <div class="stat"><span class="stat-label">XP Multiplier</span><strong id="statXp">×1</strong><small>all modes</small></div>
+      <div class="stat"><span class="stat-label">Wanted Level</span><strong id="statWanted">☆☆☆☆☆</strong><small id="statWantedSub">calm streets</small></div>
+      <div class="stat"><span class="stat-label">Flags Live</span><strong id="statFlags">0/10</strong><small>this environment</small></div>
+      <div class="stat"><span class="stat-label">Last Flip</span><strong id="statLast">—</strong><small>no restart needed</small></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTROLS PANEL ============ -->
+  <aside class="controls card">
+    <div class="panel-head">
+      <div>
+        <h2>🚩 Feature Flags</h2>
+        <p>Powered by <a href="https://www.flagsmith.com/" target="_blank" rel="noopener">Flagsmith</a> · <span id="envName">Production</span></p>
+      </div>
+      <button id="resetBtn" class="btn ghost small">↺ Reset</button>
+    </div>
+
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search flags… (e.g. xp, police)" aria-label="Search flags">
+      <select id="catFilter" aria-label="Filter by category">
+        <option value="">All categories</option>
+      </select>
+    </div>
+
+    <div id="flagList" class="flag-list" role="list"></div>
+
+    <div class="log-head">
+      <h3>📡 Live Event Log</h3>
+      <span class="live-dot"></span><small>polling every 2s</small>
+    </div>
+    <ul id="eventLog" class="event-log"></ul>
+
+    <div class="kbd-hints">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span><kbd>Space</kbd> toggle</span>
+      <span><kbd>1–9</kbd> quick flip</span>
+      <span>🎮 gamepad supported</span>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <p><strong>LEONIDA LIVE</strong> — Flip a flag. Change Vice City. Instantly. · Built on open-source <a href="https://github.com/Flagsmith/flagsmith" target="_blank" rel="noopener">Flagsmith</a> · <a href="README.md">README</a> · <a href="docs/DEMO.md">2-min demo script</a> · <code>python3 mock/server.py</code> + <code>python3 cli/leonida.py</code></p>
+</footer>
+
+<!-- Connect modal -->
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Connect Flagsmith">
+  <div class="modal-card">
+    <h3>⚙ Connect real Flagsmith</h3>
+    <p>Paste your self-hosted Flagsmith API URL + client-side environment key. The app will use the official Flagsmith JS SDK (<code>flagsmith.init</code> + <code>onChange</code>). Leave blank to stay in instant mock mode.</p>
+    <label>API URL <input id="fsApi" placeholder="http://localhost:8000/api/v1/"></label>
+    <label>Environment key <input id="fsKey" placeholder="your-client-side-key"></label>
+    <div class="modal-actions">
+      <button id="fsSave" class="btn primary">Connect</button>
+      <button id="fsMock" class="btn ghost">Use mock instead</button>
+      <button id="fsClose" class="btn ghost">Cancel</button>
+    </div>
+    <small>Keys are stored only in your browser (localStorage). Self-host: <code>docker compose --profile real up</code></small>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
