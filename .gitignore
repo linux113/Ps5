@@ -6,3 +6,4 @@ mock/state.json
 node_modules/
 dist/
 build/
+assets/frames/

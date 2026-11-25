@@ -1,7 +1,8 @@
-# 🎬 Demo Video Script — LEONIDA LIVE (2 minutes)
+# 🎬 Demo Video — LEONIDA LIVE
 
-> Judges score the video equally with the code. Record this exactly.
-> Narration audio: `assets/narration.mp3` (generated, sync it under your screen recording).
+> ✅ **Ready video: [`assets/demo.mp4`](../assets/demo.mp4)** (52s, 1280×720, narration included).
+> Rebuild anytime: `python3 tools/make_video.py` (needs `pip install pillow imageio imageio-ffmpeg`).
+> For a live screen-recording version, use the shot list below.
 
 ## Setup (do this before recording)
 

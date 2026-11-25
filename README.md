@@ -4,7 +4,7 @@
 
 **Flip a flag. Change Vice City. Instantly. No patch. No restart.**
 
-> 🎬 **Demo video:** see [docs/VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md) for the 2-minute script + narration audio (`assets/narration.mp3`).
+> 🎬 **Demo video:** [`assets/demo.mp4`](assets/demo.mp4) (52s, HD + narration) — full script in [docs/VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md).
 
 A PS5-style live-ops dashboard for a fictional GTA VI Online, powered by
 open-source [Flagsmith](https://www.flagsmith.com/). Every toggle is a real
