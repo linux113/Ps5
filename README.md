@@ -8,7 +8,19 @@ tone.
 ## ▶ Final video
 
 **`output/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4`** — 55 s, H.264 + AAC 48 kHz,
-`+faststart`, YouTube-ready. Thumbnail: `output/thumbnail_live.jpg`.
+`+faststart`, **−13.5 LUFS / −1.5 dBTP**, YouTube-ready.
+Thumbnail: `output/thumbnail_live.jpg`.
+
+### Download / play
+
+```bash
+.venv/bin/python serve_output.py 8000     # HTTP Range enabled (seek + resume)
+# open http://localhost:8000/   -> big Download button + player
+```
+
+`output/index.html` has a large **Download MP4** button, a new-tab link, a
+thumbnail download, and a "Save video as…" fallback note. Range requests are
+tested: `206 Partial Content` with a correct `Content-Range` header.
 
 ## What makes it animation (not slideshow)
 
@@ -19,7 +31,7 @@ tone.
 | Camera | Per-shot authored moves: push-ins, trucks, whip pans, low-angle jump coverage, hero wide — all in plate space with parallax |
 | VFX | Volumetric god rays, dust motes, fireflies, magic sparks, impact rings, speed streaks, camera shake, chromatic aberration on impacts, bloom, film grain, vignette, 2.35:1 letterbox |
 | Editing | 11 shots cut on narration beats, punch-in sub-cuts, whip transitions, colour-grade changes per act (warm forest → cold office → gold sunrise → violet magic) |
-| Sound | Male voice (pitched −4 %, warmth EQ, room tail), ducked original score, 40+ procedural SFX (whooshes, thuds, birds, glass shards, riser, bell), ambience bed, limiter |
+| Sound | Narration-first mix: male voice pitched −4 % with mud cut + 1.6–4.5 kHz presence lift + 3.2:1 compression; per-sample side-chain ducks the bed by up to −21 dB and carves 350–3500 Hz while speaking (**dialog SNR +15.3 dB**, was +4.8); music/SFX return to full level between lines; bus limiter → loudnorm −14 LUFS |
 
 ## Story / script (voiceover)
 
@@ -65,7 +77,8 @@ work_audio/                 generated music, SFX, ambience, voice, final mix
 build_anim.py               animation renderer (PIL + NumPy → raw frames → ffmpeg)
 cutout_fox.py               plate → alpha cutout (flood-fill + feather + de-fringe)
 make_sfx_music.py           procedural score + sound design (numpy synth)
-mix_final.py                voice processing, ducking, final mix + limiter
+mix_final.py                voice EQ/compression, side-chain duck, limiter, loudness report
+serve_output.py             static server with HTTP Range support (206) for seek/resume
 build_video.py              legacy Ken-Burns version (kept for reference)
 output/                     deliverables
 ```
@@ -80,7 +93,10 @@ python3 -m venv .venv
 .venv/bin/python mix_final.py         # voice processing + final mix
 .venv/bin/python build_anim.py full   # render 1650 frames -> work/render/video_only.mp4
 FF=.venv/lib/python3.11/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v9.0.2
-$FF -i work/render/video_only.mp4 -i work_audio/final_mix.wav \
-    -c:v copy -c:a aac -b:a 192k -ar 48000 -movflags +faststart \
-    output/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4
+# loudness-normalise the mix, then mux
+$FF -i work_audio/final_mix.wav -af "loudnorm=I=-14:TP=-1.5:LRA=11" \
+    -ar 48000 -ac 2 work_audio/final_master.wav
+$FF -i work/render/video_only.mp4 -i work_audio/final_master.wav \
+    -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 256k \
+    -movflags +faststart output/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4
 ```

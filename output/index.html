@@ -3,55 +3,92 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>अंगूर खट्टे हैं — The Fox & The Grapes</title>
+<title>अंगूर खट्टे हैं — Download</title>
 <style>
-  :root{ --gold:#f0be5a; --ink:#0a0d0b; }
+  :root{ --gold:#f0be5a; }
   *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh; background:
-      radial-gradient(1200px 700px at 20% -10%, #1d2a1b 0%, #0a0d0b 55%, #050706 100%);
-    color:#f6f2ea; font-family:system-ui,"Segoe UI",Roboto,sans-serif;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:28px 18px 40px;
-  }
-  header{text-align:center; margin-bottom:18px}
-  h1{margin:0 0 6px; font-size:clamp(22px,3.4vw,40px); letter-spacing:.5px}
+  body{margin:0;min-height:100vh;background:radial-gradient(1200px 700px at 20% -10%,#1d2a1b 0%,#0a0d0b 55%,#050706 100%);
+       color:#f6f2ea;font-family:system-ui,"Segoe UI",Roboto,sans-serif;padding:26px 18px 48px}
+  .wrap{max-width:1180px;margin:0 auto}
+  header{text-align:center;margin-bottom:20px}
+  h1{margin:0 0 6px;font-size:clamp(22px,3.4vw,40px)}
   h1 span{color:var(--gold)}
-  p.sub{margin:0; color:#a9b3a6; font-size:clamp(12px,1.4vw,15px); letter-spacing:.16em; text-transform:uppercase}
-  .frame{
-    width:min(1180px,100%); border-radius:16px; overflow:hidden;
-    box-shadow:0 30px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(240,190,90,.22);
-    background:#000;
-  }
-  video{display:block; width:100%; height:auto; aspect-ratio:16/9; background:#000}
-  .meta{
-    display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center; justify-content:space-between;
-    margin-top:16px; width:min(1180px,100%); color:#9aa396; font-size:14px;
-  }
-  .chips{display:flex; flex-wrap:wrap; gap:8px}
-  .chip{border:1px solid rgba(240,190,90,.28); color:#e9dcc0; padding:5px 11px; border-radius:999px; font-size:12.5px; letter-spacing:.04em}
-  a{color:var(--gold); text-decoration:none; border-bottom:1px dotted rgba(240,190,90,.5)}
+  p.sub{margin:0;color:#a9b3a6;font-size:clamp(12px,1.4vw,15px);letter-spacing:.16em;text-transform:uppercase}
+
+  .dlbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;
+         margin:22px 0 18px;padding:16px;border-radius:14px;
+         background:rgba(240,190,90,.07);border:1px solid rgba(240,190,90,.30)}
+  .btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;
+       padding:14px 26px;border-radius:12px;font-size:16px;letter-spacing:.02em;
+       background:linear-gradient(180deg,#f7cf7a,#e2a83c);color:#20160a;
+       border:1px solid #b98a2c;box-shadow:0 8px 24px rgba(240,190,90,.28)}
+  .btn:hover{filter:brightness(1.06)}
+  .btn.ghost{background:transparent;color:#f0be5a;border:1px solid rgba(240,190,90,.5);box-shadow:none;font-weight:600}
+  .info{color:#9aa396;font-size:14px;line-height:1.5;text-align:center}
+  .info b{color:#e9dcc0;font-weight:600}
+
+  .frame{width:100%;border-radius:16px;overflow:hidden;background:#000;
+         box-shadow:0 30px 80px rgba(0,0,0,.65),0 0 0 1px rgba(240,190,90,.22)}
+  video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:18px}
+  .card{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+        border-radius:12px;padding:14px 16px;font-size:13.5px;color:#a9b3a6}
+  .card b{display:block;color:#f0be5a;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+  a{color:var(--gold)}
+  .note{margin-top:20px;padding:14px 16px;border-radius:12px;font-size:13.5px;line-height:1.6;
+        color:#cfd6c9;background:rgba(255,255,255,.04);border-left:3px solid var(--gold)}
 </style>
 </head>
 <body>
+<div class="wrap">
   <header>
     <h1>अंगूर <span>खट्टे हैं</span></h1>
     <p class="sub">The Fox &amp; The Grapes · live 2.5D animation</p>
   </header>
-  <div class="frame">
-    <video src="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4" poster="thumbnail_live.jpg"
-           controls autoplay muted playsinline preload="metadata"></video>
+
+  <!-- ⬇ DOWNLOAD — sabse upar, bada button -->
+  <div class="dlbar">
+    <a class="btn" href="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4" download="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4">
+      ⬇ Download MP4 (31 MB)
+    </a>
+    <a class="btn ghost" href="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4" target="_blank" rel="noopener">Open in new tab</a>
+    <a class="btn ghost" href="thumbnail_live.jpg" download>Download thumbnail</a>
   </div>
-  <div class="meta">
-    <div class="chips">
-      <span class="chip">55 s</span>
-      <span class="chip">1920 × 1080</span>
-      <span class="chip">30 fps</span>
-      <span class="chip">H.264 + AAC 48 kHz</span>
-      <span class="chip">11 shots</span>
-    </div>
-    <div>Hindi voiceover · original score · full sound design</div>
+  <div class="info">
+    <b>Angoor_Khatte_Hain_LIVE_ANIMATION.mp4</b> · 55 s · 1920×1080 · 30 fps · H.264 + AAC 48 kHz · 31 MB<br>
+    Right-click / long-press the player below → <b>“Save video as…”</b> bhi chalta hai.
   </div>
-  <div class="meta"><div><a href="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4" download>Download MP4</a> · <a href="thumbnail_live.jpg" target="_blank">Thumbnail</a></div><div>unmute 🔊 for the mix</div></div>
+
+  <div class="frame" style="margin-top:20px">
+    <video id="v" src="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4" poster="thumbnail_live.jpg"
+           controls playsinline preload="metadata"></video>
+  </div>
+
+  <div class="grid">
+    <div class="card"><b>Picture</b>1920 × 1080, 30 fps, 2.35:1 letterbox, H.264 High</div>
+    <div class="card"><b>Sound</b>AAC 48 kHz stereo · −13.5 LUFS · −1.5 dBTP</div>
+    <div class="card"><b>Edit</b>11 shots · Hindi voiceover · original score · SFX</div>
+    <div class="card"><b>Streaming</b>Faststart + HTTP Range (seek/resume works)</div>
+  </div>
+
+  <div class="note">
+    <b style="color:#f0be5a">Agar download button kaam na kare:</b> neeche player par video par
+    right-click (mobile par long-press) karke <b>“Save video as…”</b> / <b>“Download video”</b> chuno,
+    ya <a href="/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4">yeh direct link</a> naye tab me kholo —
+    browser khud download kar dega.
+  </div>
+</div>
+<script>
+  // play/pause with space, and make download fall back to blob if needed
+  document.addEventListener('keydown', e => {
+    const v = document.getElementById('v');
+    if (e.code === 'Space' && e.target.tagName !== 'A') { e.preventDefault(); v.paused ? v.play() : v.pause(); }
+  });
+  const v = document.getElementById('v');
+  v.addEventListener('error', () => {
+    document.querySelector('.note').style.borderLeftColor = '#ff6b5a';
+  });
+</script>
 </body>
 </html>
