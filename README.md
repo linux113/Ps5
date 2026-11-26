@@ -1,15 +1,29 @@
 # अंगूर खट्टे हैं — The Fox & The Grapes
 
-A 55-second live **2.5D animation** (1920×1080 · 30 fps · 2.35:1 letterbox) built
-from the Hindi fable — fully animated character performance, cinematic camera
-moves, VFX, sound design and a real Hindi male voiceover with a processed film
-tone.
+Animated Hindi short built from the fable — fully animated character
+performance, cinematic camera moves, VFX, sound design and a real Hindi male
+voiceover with a processed film tone. Ships in **16:9 (55 s)** and
+**9:16 vertical (53.4 s, re-composed for Reels/Shorts)**.
 
-## ▶ Final video
+## ▶ Final videos — two cuts
 
-**`output/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4`** — 55 s, H.264 + AAC 48 kHz,
-`+faststart`, **−13.5 LUFS / −1.5 dBTP**, YouTube-ready.
-Thumbnail: `output/thumbnail_live.jpg`.
+| Cut | File | Spec | For |
+|-----|------|------|-----|
+| **9:16 vertical** | `output/Angoor_Khatte_Hain_VERTICAL_9x16.mp4` | 53.4 s · 1080×1920 · 30 fps · 22 MB · −13.6 LUFS | Reels · Shorts · TikTok |
+| 16:9 landscape | `output/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4` | 55 s · 1920×1080 · 30 fps · 31 MB · −13.5 LUFS | YouTube · web |
+
+Thumbnails: `output/thumbnail_vertical.jpg` (1080×1920), `output/thumbnail_live.jpg` (1280×720).
+
+The vertical cut is **not a crop** — every shot was re-composed for the tall frame
+(fox low in frame with headroom, grapes in the upper third, vertical type stacks).
+
+### Short links
+
+| Link | Serves |
+|------|--------|
+| `/reel` · `/vertical` · `/shorts` | 9:16 file (forced download) |
+| `/download` · `/dl` | 16:9 file (forced download) |
+| `/video` | redirect for in-tab playback |
 
 ### Download / play
 
@@ -29,7 +43,9 @@ tested: `206 Partial Content` with a correct `Content-Range` header.
 | Character | 7 cutout fox poses (stand / reach / jump / sad / sit / run / shock) composited as an **actor** with feet-anchored ground contact |
 | Acting | Anticipation crouch → stretch on launch → squash on landing, idle breathing (squash+stretch), tail sway, run bob, motion-blur afterimages |
 | Camera | Per-shot authored moves: push-ins, trucks, whip pans, low-angle jump coverage, hero wide — all in plate space with parallax |
-| VFX | Volumetric god rays, dust motes, fireflies, magic sparks, impact rings, speed streaks, camera shake, chromatic aberration on impacts, bloom, film grain, vignette, 2.35:1 letterbox |
+| VFX | Volumetric god rays, dust motes, fireflies, magic sparks, impact rings, speed streaks, camera shake, chromatic aberration on impacts, bloom, film grain, vignette |
+| **Realistic VFX pass (9:16)** | Depth of field with per-shot focus masks, physical lens flare (hexagonal ghosts + starburst + anamorphic streaks), halation on light sources only, 3-depth volumetric fog, atmospheric haze, highlight roll-off, rolling-shutter micro jitter |
+| **Sound FX (9:16)** | Sub-drop + riser on every cut, leap whooshes, landing thuds, cloth/fur rustle, paw taps, leaf rustle, keyboard clacks, chair creak, paper slam, mug clink, breath puffs, reversed magic swell, glass chimes |
 | Editing | 11 shots cut on narration beats, punch-in sub-cuts, whip transitions, colour-grade changes per act (warm forest → cold office → gold sunrise → violet magic) |
 | Sound | Narration-first mix: male voice pitched −4 % with mud cut + 1.6–4.5 kHz presence lift + 3.2:1 compression; per-sample side-chain ducks the bed by up to −21 dB and carves 350–3500 Hz while speaking (**dialog SNR +15.3 dB**, was +4.8); music/SFX return to full level between lines; bus limiter → loudnorm −14 LUFS |
 
@@ -74,10 +90,13 @@ assets2/                    art for the animated cut
   cut/*.png                 soft-alpha cutouts used by the renderer
 audio2/v01..v10.mp3         narration cues (same voice, 10 beats)
 work_audio/                 generated music, SFX, ambience, voice, final mix
-build_anim.py               animation renderer (PIL + NumPy → raw frames → ffmpeg)
+build_anim.py               animation renderer, 16:9 (PIL + NumPy → raw frames → ffmpeg)
+build_vertical.py           9:16 renderer — re-composed shots + realistic VFX pass
 cutout_fox.py               plate → alpha cutout (flood-fill + feather + de-fringe)
-make_sfx_music.py           procedural score + sound design (numpy synth)
-mix_final.py                voice EQ/compression, side-chain duck, limiter, loudness report
+make_sfx_music.py           procedural score + sound design, 16:9 (numpy synth)
+make_sfx_vertical.py        sound design for the 9:16 cut (cut-punctuation FX)
+mix_final.py                voice EQ/compression, side-chain duck, limiter (16:9)
+mix_vertical.py             phone-tuned voice + punchier FX, side-chain duck (9:16)
 serve_output.py             static server with HTTP Range support (206) for seek/resume
 build_video.py              legacy Ken-Burns version (kept for reference)
 output/                     deliverables
@@ -93,6 +112,20 @@ python3 -m venv .venv
 .venv/bin/python mix_final.py         # voice processing + final mix
 .venv/bin/python build_anim.py full   # render 1650 frames -> work/render/video_only.mp4
 FF=.venv/lib/python3.11/site-packages/imageio_ffmpeg/binaries/ffmpeg-linux-x86_64-v9.0.2
+# ---- 9:16 vertical cut ----
+.venv/bin/python make_sfx_vertical.py
+.venv/bin/python mix_vertical.py
+.venv/bin/python build_vertical.py full     # 1602 frames -> work/render_v/video_v.mp4
+$FF -i work_audio_v/final_mix.wav -af "loudnorm=I=-14:TP=-1.5:LRA=11" \
+    -ar 48000 -ac 2 work_audio_v/final_master.wav
+$FF -i work/render_v/video_v.mp4 -i work_audio_v/final_master.wav \
+    -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 256k \
+    -movflags +faststart output/Angoor_Khatte_Hain_VERTICAL_9x16.mp4
+# optional: shrink for upload
+$FF -i output/Angoor_Khatte_Hain_VERTICAL_9x16.mp4 -c:v libx264 -preset slow \
+    -crf 22 -c:a copy -movflags +faststart /tmp/small.mp4
+
+# ---- 16:9 landscape cut ----
 # loudness-normalise the mix, then mux
 $FF -i work_audio/final_mix.wav -af "loudnorm=I=-14:TP=-1.5:LRA=11" \
     -ar 48000 -ac 2 work_audio/final_master.wav
