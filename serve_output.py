@@ -25,12 +25,16 @@ class Handler(SimpleHTTPRequestHandler):
         sys.stderr.write("%s - %s\n" % (self.address_string(), fmt % args))
 
     def do_GET(self):
-        # friendly short links
-        if self.path in ("/download", "/dl", "/video"):
+        # /video -> plain redirect (plays inline in a new tab)
+        if self.path == "/video":
             self.send_response(302)
             self.send_header("Location", "/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4")
             self.end_headers()
             return
+        # /download & /dl -> force a real file save (Content-Disposition)
+        force_dl = self.path.split("?")[0] in ("/download", "/dl")
+        if force_dl:
+            self.path = "/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4"
         rng = self.headers.get("Range")
         path = self.translate_path(self.path)
         if not os.path.isfile(path):
@@ -58,6 +62,9 @@ class Handler(SimpleHTTPRequestHandler):
                 self.send_header("Content-Type", ctype)
                 self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
                 self.send_header("Content-Length", str(length))
+                if force_dl:
+                    self.send_header("Content-Disposition",
+                                     'attachment; filename="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4"')
                 self.end_headers()
                 with open(path, "rb") as f:
                     f.seek(start)
@@ -76,6 +83,9 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(size))
+        if force_dl:
+            self.send_header("Content-Disposition",
+                             'attachment; filename="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4"')
         self.end_headers()
         with open(path, "rb") as f:
             while True:
@@ -87,6 +97,8 @@ class Handler(SimpleHTTPRequestHandler):
                     return
 
     def do_HEAD(self):
+        if self.path.split("?")[0] in ("/download", "/dl"):
+            self.path = "/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4"
         path = self.translate_path(self.path)
         if not os.path.isfile(path):
             return super().do_HEAD()
@@ -94,6 +106,9 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", self.guess_type(path))
         self.send_header("Content-Length", str(size))
+        if self.path.endswith(".mp4"):
+            self.send_header("Content-Disposition",
+                             'attachment; filename="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4"')
         self.end_headers()
 
 if __name__ == "__main__":
