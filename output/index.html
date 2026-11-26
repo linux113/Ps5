@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>अंगूर खट्टे हैं — Download</title>
+<style>
+  :root{ --gold:#f0be5a; }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:radial-gradient(1200px 700px at 20% -10%,#1d2a1b 0%,#0a0d0b 55%,#050706 100%);
+       color:#f6f2ea;font-family:system-ui,"Segoe UI",Roboto,sans-serif;padding:24px 16px 46px}
+  .wrap{max-width:1180px;margin:0 auto}
+  header{text-align:center;margin-bottom:20px}
+  h1{margin:0 0 6px;font-size:clamp(21px,3.2vw,38px)}
+  h1 span{color:var(--gold)}
+  p.sub{margin:0;color:#a9b3a6;font-size:clamp(11px,1.3vw,14px);letter-spacing:.16em;text-transform:uppercase}
+
+  .tabs{display:flex;gap:10px;justify-content:center;margin:22px 0 16px;flex-wrap:wrap}
+  .tab{padding:11px 22px;border-radius:999px;cursor:pointer;font-weight:700;font-size:14.5px;
+       border:1px solid rgba(240,190,90,.35);background:transparent;color:#e9dcc0;letter-spacing:.02em}
+  .tab.on{background:linear-gradient(180deg,#f7cf7a,#e2a83c);color:#20160a;border-color:#b98a2c}
+
+  .panes{position:relative}
+  .pane{display:none}
+  .pane.on{display:block}
+
+  .dlbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;
+         padding:15px;border-radius:14px;margin-bottom:16px;
+         background:rgba(240,190,90,.07);border:1px solid rgba(240,190,90,.30)}
+  .btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;
+       padding:14px 24px;border-radius:12px;font-size:15.5px;
+       background:linear-gradient(180deg,#f7cf7a,#e2a83c);color:#20160a;border:1px solid #b98a2c;
+       box-shadow:0 8px 24px rgba(240,190,90,.26)}
+  .btn.ghost{background:transparent;color:#f0be5a;border:1px solid rgba(240,190,90,.5);box-shadow:none;font-weight:600}
+  .btn:hover{filter:brightness(1.06)}
+  .info{color:#9aa396;font-size:13.5px;line-height:1.55;text-align:center;margin-bottom:18px}
+  .info b{color:#e9dcc0;font-weight:600}
+
+  /* vertical player keeps the reel shape */
+  .stage{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;justify-content:center}
+  .frame{flex:1 1 340px;max-width:760px;border-radius:16px;overflow:hidden;background:#000;
+         box-shadow:0 30px 80px rgba(0,0,0,.65),0 0 0 1px rgba(240,190,90,.22)}
+  .frame.vert{max-width:430px}
+  video{display:block;width:100%;height:auto;background:#000}
+  .side{flex:1 1 260px;max-width:400px;display:flex;flex-direction:column;gap:10px}
+  .card{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);
+        border-radius:12px;padding:13px 15px;font-size:13px;color:#a9b3a6;line-height:1.5}
+  .card b{display:block;color:#f0be5a;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:4px}
+  .note{margin-top:20px;padding:14px 16px;border-radius:12px;font-size:13.5px;line-height:1.6;
+        color:#cfd6c9;background:rgba(255,255,255,.04);border-left:3px solid var(--gold)}
+  a{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>अंगूर <span>खट्टे हैं</span></h1>
+    <p class="sub">The Fox &amp; The Grapes · animated short</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab on" data-p="v">📱 9:16 Reels / Shorts</button>
+    <button class="tab" data-p="h">🎬 16:9 Landscape</button>
+  </div>
+
+  <div class="panes">
+    <!-- ---------------- VERTICAL ---------------- -->
+    <div class="pane on" id="pane-v">
+      <div class="dlbar">
+        <a class="btn" href="/reel" download>⬇ Download 9:16 MP4 (22 MB)</a>
+        <a class="btn ghost" href="/reel" target="_blank" rel="noopener">Open</a>
+        <a class="btn ghost" href="thumbnail_vertical.jpg" download>Thumbnail</a>
+      </div>
+      <div class="info">
+        <b>Angoor_Khatte_Hain_VERTICAL_9x16.mp4</b> · 53.4 s · 1080×1920 · 30 fps · 22 MB<br>
+        Reels · Shorts · TikTok ready
+      </div>
+      <div class="stage">
+        <div class="frame vert">
+          <video src="Angoor_Khatte_Hain_VERTICAL_9x16.mp4" poster="thumbnail_vertical.jpg"
+                 controls playsinline preload="metadata"></video>
+        </div>
+        <div class="side">
+          <div class="card"><b>Picture</b>1080 × 1920 · 30 fps · H.264 High · 9:16</div>
+          <div class="card"><b>Sound</b>AAC 48 kHz · −13.6 LUFS · −1.5 dBTP</div>
+          <div class="card"><b>New in this cut</b>Vertical re-composition, depth of field, lens flares, halation, volumetric fog, sub-drops on cuts, punchier FX</div>
+          <div class="card"><b>Streaming</b>Faststart + HTTP Range (seek / resume)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- LANDSCAPE ---------------- -->
+    <div class="pane" id="pane-h">
+      <div class="dlbar">
+        <a class="btn" href="/download" download>⬇ Download 16:9 MP4 (31 MB)</a>
+        <a class="btn ghost" href="/download" target="_blank" rel="noopener">Open</a>
+        <a class="btn ghost" href="thumbnail_live.jpg" download>Thumbnail</a>
+      </div>
+      <div class="info">
+        <b>Angoor_Khatte_Hain_LIVE_ANIMATION.mp4</b> · 55 s · 1920×1080 · 30 fps · 31 MB
+      </div>
+      <div class="frame">
+        <video src="Angoor_Khatte_Hain_LIVE_ANIMATION.mp4" poster="thumbnail_live.jpg"
+               controls playsinline preload="metadata"></video>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b style="color:#f0be5a">Download na ho to:</b> video par right-click (mobile par long-press)
+    → <b>“Save video as…”</b>, ya
+    <a href="/reel">9:16 direct link</a> · <a href="/download">16:9 direct link</a>.
+  </div>
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+    document.getElementById('pane-' + t.dataset.p).classList.add('on');
+    // pause the hidden player
+    document.querySelectorAll('video').forEach(v => v.pause());
+  }));
+</script>
+</body>
+</html>

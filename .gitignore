@@ -1,0 +1,18 @@
+# virtualenv / caches
+.venv/
+__pycache__/
+*.pyc
+
+# intermediate renders
+work/
+work_audio/
+
+# source plates & raw narration (art is reproducible, keep repo small)
+assets/
+assets2/
+audio/
+audio2/
+fonts/
+
+# deliverables stay tracked: output/
+work_audio_v/
