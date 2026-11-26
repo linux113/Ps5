@@ -25,6 +25,12 @@ class Handler(SimpleHTTPRequestHandler):
         sys.stderr.write("%s - %s\n" % (self.address_string(), fmt % args))
 
     def do_GET(self):
+        # friendly short links
+        if self.path in ("/download", "/dl", "/video"):
+            self.send_response(302)
+            self.send_header("Location", "/Angoor_Khatte_Hain_LIVE_ANIMATION.mp4")
+            self.end_headers()
+            return
         rng = self.headers.get("Range")
         path = self.translate_path(self.path)
         if not os.path.isfile(path):
